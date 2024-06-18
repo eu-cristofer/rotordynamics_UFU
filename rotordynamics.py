@@ -92,6 +92,10 @@ class Rotor:
         
         Returns:
             float: The mass of the rotor.
+
+        Reference:
+            Rotordynamics Prediction in Engineering, Second Edition, by Michel 
+            Lalanne and Guy Ferraris equation 2.12.
         """
         m_0 = 0.0
         for disc in self.discs:
@@ -139,6 +143,10 @@ class Rotor:
         
         Returns:
             float: The parameter 'a'.
+
+        Reference:
+            Rotordynamics Prediction in Engineering, Second Edition, by Michel 
+            Lalanne and Guy Ferraris equation 2.12.
         """
         a_0 = 0.0
         for disc in self.discs:
@@ -205,17 +213,17 @@ class Rotor:
         identity = np.eye(self.M.shape[0])
 
         omega = speed / 60 * 2 * np.pi
-        bottom_block = np.hstack((self.M_inverse @ (self.K), self.M_inverse @ (omega * self.G)))
+        bottom_block = np.hstack((-self.M_inverse @ (self.K), -self.M_inverse @ (omega * self.G)))
 
         top_block = np.hstack((zero_matrix, identity))
         A = np.vstack((top_block, bottom_block))
         return A
     
-    def omega_n(self,
+    def characteristic_eq(self,
                 f: float,
                 speed: float) -> float:
         """
-        Function to determine the eigenvalue.
+        Characteristic equation function. Their roots are the eigenvalues.
         
         Args:
             f (float): Frequency in Hertz.
@@ -237,10 +245,10 @@ class Rotor:
         Returns:
             float: The natural frequency.
         """
-        omega = fsolve(self.omega_n, 10, args=0)
+        omega = fsolve(self.characteristic_eq, 10, args=0)
         return omega[0]
    
-    def roots(self,
+    def compute_roots(self,
               speed_range: np.ndarray = np.linspace(0, 9000, 101)) -> Tuple[List[float], List[float]]:
         """
         Calculate the forward and backward whirl speeds.
@@ -251,20 +259,46 @@ class Rotor:
         Returns:
             tuple[List[float], List[float]]: Forward and backward whirl speeds.
         """
+        
+        # Computing the eigenvalues
         omega_0 = self.omega_0
         roots_fw = [omega_0]
         roots_bw = [omega_0]
         
         for speed in speed_range[1:]:
-            root_fw = fsolve(self.omega_n, roots_fw[-1] + 1, args=(speed))
-            root_bw = fsolve(self.omega_n, roots_bw[-1] - 1, args=(speed))
+            root_fw = fsolve(self.characteristic_eq, roots_fw[-1] + 1, args=(speed))
+            root_bw = fsolve(self.characteristic_eq, roots_bw[-1] - 1, args=(speed))
             roots_fw.append(root_fw[0])
             roots_bw.append(root_bw[0])
 
+        # Computing the critical speeds
+        backward_diff = 1000
+        backward_guess = 0
+        forward_diff = 1000
+        forward_guess = 0
+        for i , j , k in zip(speed_range, roots_fw, roots_bw):
+            if i > 0:
+                if abs(j - i / 60) < forward_diff:
+                    forward_diff = abs(j - i / 60)
+                    forward_guess = i
+                if abs(k - i / 60) < backward_diff:
+                    backward_diff = abs(j - i / 60)
+                    backward_guess = i
+        
+        from scipy.optimize import newton
+
+        self.critical_speed_fw = Q_(newton(self.__func, forward_guess), "rpm")
+        
+        self.critical_speed_bw = Q_(newton(self.__func, backward_guess), "rpm")
         return roots_fw, roots_bw
+
+    def __func(self, x):
+        """Funtion to solve Newton and calculate the critical speeds"""    
+        return self.characteristic_eq(x/60, x)
     
     def plot_Campbell(self,
                       speed_range: np.ndarray = np.linspace(0, 9000, 101),
+                      return_data=False,
                       export_chart=False) -> None:
         """
         Plots a Campbell diagram.
@@ -272,11 +306,12 @@ class Rotor:
         Args:
             speed_range (np.ndarray): Array of rotational speeds in RPM.
             export_chart (bool): Whether to export the chart to an HTML file.
+            return_data (bool): Whether to return the chart data in a dict.
         
         Returns:
             None
         """
-        fw, bw = self.roots(speed_range)
+        fw, bw = self.compute_roots(speed_range)
         # Create traces
         trace0 = go.Scatter(
             x=speed_range,
@@ -296,6 +331,22 @@ class Rotor:
             mode='lines',
             name='Backward'
         )
+        point_fw = go.Scatter(
+            x=[self.critical_speed_fw.m],
+            y=[self.critical_speed_fw.m / 60],
+            mode='markers',
+            marker={'size' : 10},
+            hovertext=f'{self.critical_speed_fw:.0f~P}',
+            name='Critical speed'
+        )
+        point_bw = go.Scatter(
+            x=[self.critical_speed_bw.m],
+            y=[self.critical_speed_bw.m / 60],
+            mode='markers',
+            marker={'size' : 10},
+            hovertext=f'{self.critical_speed_bw:.0f~P}',
+            name='Critical speed'
+        )
         # Create the layout
         layout = go.Layout(
             title='Campbell Diagram',
@@ -303,13 +354,22 @@ class Rotor:
             yaxis=dict(title='Natural Frequency (Hz)')
         )
         # Create the figure
-        fig = go.Figure(data=[trace0, trace1, trace2], layout=layout)
-        
+        fig = go.Figure(data=[trace0, trace1, trace2, point_fw, point_bw], layout=layout)
+
         # Plot the figure
         if export_chart:
             pyo.plot(fig, filename='chart.html')
         fig.show()
-        
+
+        # Export the data
+        if return_data:
+            data = {
+                'Speed' : list(speed_range),
+                'Forward': fw,
+                'Backward': bw
+            }
+            return data
+      
     def f(self, y: float) -> float:
         """
         Displacement function.
