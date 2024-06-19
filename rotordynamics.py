@@ -337,7 +337,7 @@ class Rotor:
             mode='markers',
             marker={'size' : 10},
             hovertext=f'{self.critical_speed_fw:.0f~P}',
-            name='Critical speed'
+            name=f'Critical speed: {self.critical_speed_fw:.0f~P}'
         )
         point_bw = go.Scatter(
             x=[self.critical_speed_bw.m],
@@ -345,7 +345,7 @@ class Rotor:
             mode='markers',
             marker={'size' : 10},
             hovertext=f'{self.critical_speed_bw:.0f~P}',
-            name='Critical speed'
+            name=f'Critical speed: {self.critical_speed_bw:.0f~P}'
         )
         # Create the layout
         layout = go.Layout(
