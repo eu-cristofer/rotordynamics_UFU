@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-This module provides classes to model materials and geometric objects like 
-cylinders and discs. It calculates various physical properties such as volume, 
-mass, surface area, and moments of inertia.
+This module is part of the rotor_analysis package and provides classes to model
+a spinning rotor with a mass attached. It provides classes to model materials 
+and geometric objects like cylinders and discs. It calculates various physical 
+properties such as volume, mass, surface area, and moments of inertia.
 
 Classes:
     Material: Represents a material with a name and density.
@@ -10,12 +11,19 @@ Classes:
     Collection: A class to hold a collection of objects.
 """
 
+__author__ = "Cristofer Antoni Souza Costa"
+__version__ = "1.0.0"
+__email__ = "cristofercosta@yahoo.com.br"
+__status__ = "Production"
+
+
+from typing import List, Optional
 import pint
 import numpy as np
-from typing import List, Optional
+
 
 ureg = pint.UnitRegistry()
-ureg.default_format = '~P'  # Abbreviated unit names.
+ureg.formatter.default_format = '~P'  # Abbreviated unit names.
 Q_ = ureg.Quantity
 
 class Material:
@@ -173,7 +181,8 @@ class Cylinder:
     @property
     def J(self) -> pint.Quantity:
         """
-        Calculate the polar moment of inertia or second polar moment of area (rotational inertia) about its center of mass.
+        Calculate the polar moment of inertia or second polar moment of area (rotational
+        inertia) about its center of mass.
         
         Returns:
             pint.Quantity: Area moment of inertia about the origin.
@@ -355,7 +364,7 @@ class Collection:
         string = ""
         for item in self._items:
             string += item.__str__() + "\n\n"
-        return (f"{self.__repr__()}\n\n{string}")
+        return f"{self.__repr__()}\n\n{string}"
     
 if __name__ == '__main__':
     # Example of Material Class
@@ -374,7 +383,7 @@ if __name__ == '__main__':
                          length=Q_(0.8, 'm'),
                          material=sae_4140_steel)
     cylinder3 = Cylinder(outer_radius=Q_(0.6, 'm'),
-                         inner_radius=Q_(0.2, 'm'),
+                         inner_radius=Q_(0.0, 'm'),
                          length=Q_(1.2, 'm'),
                          material=sae_4140_steel)
     print(cylinder1, '\n')
@@ -404,3 +413,4 @@ if __name__ == '__main__':
     print("Iterating through the collection:")
     for item in collection:
         print(item, '\n')
+        
