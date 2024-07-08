@@ -50,15 +50,25 @@ __email__ = "cristofercosta@yahoo.com.br"
 __status__ = "Prototype"
 
 from .rotordynamics import Disc, Shaft, Rotor
-from .utilities import Material, Cylinder, Collection, Q_
-# from results import save_results, load_results
+from .utilities import Material, Q_
+from .results import (
+    add_secondary_yaxis,
+    campbell_diagram_axial_forces,
+    interactive_orbit,
+    interactive_orbit_campbell,
+    update_circle_and_sine,
+)
 
 
 __all__ = [
+    "add_secondary_yaxis",
+    "campbell_diagram_axial_forces",
     "Disc",
+    "interactive_orbit",
+    "interactive_orbit_campbell",
     "Material",
     "Q_",
     "Rotor",
     "Shaft",
+    "update_circle_and_sine",
 ]
-

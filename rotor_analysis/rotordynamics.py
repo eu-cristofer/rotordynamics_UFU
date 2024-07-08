@@ -324,7 +324,6 @@ class Rotor:
         speed_range: np.ndarray = np.linspace(0, 9000, 101),
         return_data=False,
         export_chart=False,
-        auto_show=True,
     ) -> None:
         """
         Plots a Campbell diagram.
@@ -385,9 +384,6 @@ class Rotor:
         if export_chart:
             pyo.plot(fig, filename="chart.html")
             
-        if auto_show:
-            fig.show()
-
         # Export the data
         if return_data:
             data = {"Speed": list(speed_range), "Forward": fw, "Backward": bw}
