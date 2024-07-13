@@ -189,17 +189,34 @@ class Rotor:
         Returns:
             float: The stiffness of the rotor.
         """
+        
+        '''Simetric portion'''
+        # Computing the shaft bending stiffness
         shaft = self.shaft
         k_0 = (
-            shaft.material.young_modulus.m * shaft.Ix.m * self.int_h_sqr(shaft.length.m)
+            shaft.material.young_modulus.m
+            * shaft.Ix.m
+            * self.int_h_sqr(shaft.length.m)
         )
 
-        # Axial force
+        # Computing Axial force
         if hasattr(self, "axial_force"):
             F0 = self.axial_force.to("N").m
             k_1 = F0 * self.int_g_sqr(shaft.length.m)
-            return k_0 + k_1
-        return k_0
+            k = k_0 + k_1
+        else:
+            k = k_0
+        
+        '''Nonsymetric portion'''
+        # Spring
+        if hasattr(self,"spring"):
+            k1 = k + self.spring.kxx * self.f(self.spring.coordinate.m)**2
+            k2 = k + self.spring.kzz * self.f(self.spring.coordinate.m)**2
+        else:
+            k1 = k
+            k2 = k
+        
+        return k1 , k2
 
     @property
     def K(self) -> np.ndarray:
@@ -209,7 +226,7 @@ class Rotor:
         Returns:
             np.ndarray: Stiffness matrix.
         """
-        K = np.array(([self.stiffness, 0], [0, self.stiffness]))
+        K = np.array(([self.stiffness[0], 0], [0, self.stiffness[1]]))
         return K
 
     def A(self, speed):
@@ -248,15 +265,23 @@ class Rotor:
         Returns:
             float: The computed value.
         """
-        comp = (
-            self.mass**2 * (2 * np.pi * f) ** 4
-            - (
-                2 * self.stiffness * self.mass
-                + self.a**2 * (speed / 60 * 2 * np.pi) ** 2
+        omega = 2 * np.pi * f
+        k1, k2 = self.stiffness
+        
+        if k1 == k2:
+            comp = (
+                self.mass**2 * omega**4
+                - (2*k1*self.mass + self.a**2 * (speed/60 * 2*np.pi)**2)
+                * omega**2
+                + k1**2
             )
-            * (2 * np.pi * f) ** 2
-            + self.stiffness**2
+        comp = (
+            self.mass**2 * omega**4
+            - (k1*self.mass + k2*self.mass + self.a**2 * (speed/60 * 2*np.pi)**2)
+            * omega**2
+            + k1 * k2
         )
+        
         return comp
 
     @property
@@ -387,7 +412,7 @@ class Rotor:
         # Export the data
         if return_data:
             data = {"Speed": list(speed_range), "Forward": fw, "Backward": bw}
-            return data
+            return data, fig
         else:
             return fig
 

@@ -54,8 +54,14 @@ from .utilities import Material, Q_
 from .results import (
     add_secondary_yaxis,
     campbell_diagram_axial_forces,
+    create_video_from_frames,
+    FFT,
     interactive_orbit,
     interactive_orbit_campbell,
+    interactive_orbit_campbell_async,
+    interactive_orbit_fixed_speed,
+    plot_vibration_amplitude,
+    save_orbit_frames,
     update_circle_and_sine,
 )
 
@@ -63,12 +69,18 @@ from .results import (
 __all__ = [
     "add_secondary_yaxis",
     "campbell_diagram_axial_forces",
+    "create_video_from_frames",
     "Disc",
+    "FFT",
     "interactive_orbit",
     "interactive_orbit_campbell",
+    "interactive_orbit_campbell_async",
+    "interactive_orbit_fixed_speed",
     "Material",
+    "plot_vibration_amplitude",
     "Q_",
     "Rotor",
+    "save_orbit_frames",
     "Shaft",
     "update_circle_and_sine",
 ]
