@@ -210,8 +210,8 @@ class Rotor:
         '''Nonsymetric portion'''
         # Spring
         if hasattr(self,"spring"):
-            k1 = k + self.spring.kxx * self.f(self.spring.coordinate.m)**2
-            k2 = k + self.spring.kzz * self.f(self.spring.coordinate.m)**2
+            k1 = k + self.spring.kxx.m * self.f(self.spring.coordinate.m)**2
+            k2 = k + self.spring.kzz.m * self.f(self.spring.coordinate.m)**2
         else:
             k1 = k
             k2 = k
@@ -268,13 +268,6 @@ class Rotor:
         omega = 2 * np.pi * f
         k1, k2 = self.stiffness
         
-        if k1 == k2:
-            comp = (
-                self.mass**2 * omega**4
-                - (2*k1*self.mass + self.a**2 * (speed/60 * 2*np.pi)**2)
-                * omega**2
-                + k1**2
-            )
         comp = (
             self.mass**2 * omega**4
             - (k1*self.mass + k2*self.mass + self.a**2 * (speed/60 * 2*np.pi)**2)
@@ -292,8 +285,8 @@ class Rotor:
         Returns:
             float: The natural frequency.
         """
-        omega = fsolve(self.characteristic_eq, 10, args=0)
-        return omega[0]
+        omega = fsolve(self.characteristic_eq, [20, 10], args=0)
+        return omega
 
     def compute_roots(
         self, speed_range: np.ndarray = np.linspace(0, 9000, 101)
@@ -310,12 +303,12 @@ class Rotor:
 
         # Computing the eigenvalues
         omega_0 = self.omega_0
-        roots_fw = [omega_0]
-        roots_bw = [omega_0]
+        roots_fw = [omega_0[1]]
+        roots_bw = [omega_0[0]]
 
         for speed in speed_range[1:]:
             root_fw = fsolve(self.characteristic_eq, roots_fw[-1] + 1, args=(speed))
-            root_bw = fsolve(self.characteristic_eq, roots_bw[-1] - 1, args=(speed))
+            root_bw = fsolve(self.characteristic_eq, roots_bw[-1] - 1 , args=(speed))
             roots_fw.append(root_fw[0])
             roots_bw.append(root_bw[0])
 

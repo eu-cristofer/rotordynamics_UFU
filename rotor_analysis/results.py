@@ -152,7 +152,7 @@ def campbell_diagram_axial_forces(
 
 
 def add_secondary_yaxis(
-    fig: go.Figure, values: np.ndarray, yaxis: str = "y2", overlaying_axis: str = "y"
+    fig: go.Figure, values: np.ndarray, yaxis: str = "y2", overlaying_axis: str = "y", title: str = ""
 ) -> None:
     """
     Add a secondary y-axis to an existing Plotly figure to display additional data.
@@ -198,7 +198,7 @@ def add_secondary_yaxis(
         go.Scatter(
             x=campbell_data[0]["x"],
             y=values,
-            name="Vibration Amplitude",
+            name="Vibration Amplitude " + title,
             yaxis=yaxis
         )
     )
@@ -475,6 +475,8 @@ def interactive_orbit_campbell(
         name='Vertical Line'
     )
 
+    max_amplitude = max(np.max(np.abs(q1_circle)), np.max(np.abs(q2_circle)))
+
     # Set fixed axis ranges
     fig.update_xaxes(title='q1 (m)', range=[-1.2 * max_amplitude, 1.2 * max_amplitude], row=1, col=1)
     fig.update_yaxes(title='q2 (m)', range=[-1.2 * max_amplitude, 1.2 * max_amplitude], row=1, col=1)
@@ -486,9 +488,19 @@ def interactive_orbit_campbell(
     # Create slider steps
     steps = []
     for speed in range(0, 9001, 50):
+        layout_dict = fig.to_dict()['layout']
+
         q1_circle, q2_circle = update_circle_and_sine(A1_func, A2_func, speed, theta, *args)
 
-        layout_dict = fig.to_dict()['layout']
+        # Adjusting the y and x axis scales for orbit and timebase plot
+        max_amplitude = max(np.max(np.abs(q1_circle)), np.max(np.abs(q2_circle)))
+        yaxis = layout_dict['yaxis']
+        yaxis['range'] = [-1.2 * max_amplitude, 1.2 * max_amplitude]
+        xaxis = layout_dict['xaxis']
+        xaxis['range'] = [-1.2 * max_amplitude, 1.2 * max_amplitude]
+        yaxis2 = layout_dict['yaxis2']
+        yaxis2['range'] = [-1.2 * max_amplitude, 1.2 * max_amplitude]
+
         # Adjusting the annotations for q1 and q2 in time representation
         annotations = layout_dict['annotations']
         annotations[0]['text'] = f"Orbit @ {speed} rpm"
@@ -509,6 +521,9 @@ def interactive_orbit_campbell(
                          campbell[0]['y'], campbell[1]['y'], campbell[2]['y'], campbell[3]['y'],
                          campbell[4]['y'], campbell[5]['y']]},
                   {'annotations': annotations,
+                   'yaxis': yaxis,
+                   'xaxis': xaxis,
+                   'yaxis2': yaxis2,
                    'shapes': shapes}],
             label=f'{speed}'
         )
