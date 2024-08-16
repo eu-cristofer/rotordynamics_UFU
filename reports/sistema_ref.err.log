@@ -18,19 +18,31 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-from matplotlib import rcParams, cycler
-import matplotlib.pyplot as plt
 import numpy as np
-plt.ion()
+
+# Giro em torno de Z
+psi = np.pi / 4
+
+# Matriz de Transformação de Coordenadas R0_R1
+transformation_R0_R1 = np.array(([np.cos(psi) , np.sin(psi), 0],
+                                 [-np.sin(psi), np.cos(psi), 0],
+                                 [0           , 0          , 1]))
+
+# Verificando a implementação, definindo um vetor em R0
+vector_R0 = np.array(([0, 1, 0]))
+
+# Aplicando a matriz de transformação
+vector_R1 = transformation_R0_R1 @ vector_R0
+vector_R1
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
 Cell [0;32mIn[1], line 1[0m
-[0;32m----> 1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mmatplotlib[39;00m [38;5;28;01mimport[39;00m rcParams, cycler
-[1;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
-[1;32m      3[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[0;32m----> 1[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
+[1;32m      3[0m [38;5;66;03m# Giro em torno de Z[39;00m
+[1;32m      4[0m psi [38;5;241m=[39m np[38;5;241m.[39mpi [38;5;241m/[39m [38;5;241m4[39m
 
-[0;31mModuleNotFoundError[0m: No module named 'matplotlib'
+[0;31mModuleNotFoundError[0m: No module named 'numpy'
 
