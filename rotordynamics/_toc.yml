@@ -3,9 +3,11 @@
 
 format: jb-book
 root: presentation
-chapters:
-- file: intro
-- file: sistema_ref
-- file: markdown
-- file: notebooks
-- file: markdown-notebooks
+parts:
+  - caption: Fundamentos
+    chapters:
+    - file: intro
+    - file: sistema_ref
+  - caption: Análise com dados numéricos
+    chapters:
+    - file: campbell
