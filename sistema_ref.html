@@ -359,7 +359,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -375,6 +377,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformacao-de-coordenadas">Transformação de Coordenadas</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -391,6 +401,88 @@ document.write(`
 <img src="_static/Coordinate_system.png" width="400"/>
 </div>
 <p>O objetivo da utilização de sistemas móveis de referência na cinemática é facilitar a representação de movimentos complexos, subdividindo-os em vários movimentos mais simples que se somam para compor o movimento absoluto. Toda a representação matemática é baseada em cursores considerando uma origem predefinida, conforme descrito a seguir.</p>
+<ul class="simple">
+<li><p><strong>Sistema inercial</strong>, composto pela origem <span class="math notranslate nohighlight">\(O\)</span> e cursores <span class="math notranslate nohighlight">\(\mathbf{\hat{X}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{Y}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{Z}}\)</span>, na forma<br><br>
+$<span class="math notranslate nohighlight">\(R_0:\{O, \mathbf{\hat{X}},\mathbf{\hat{Y}},\mathbf{\hat{Z}}\}.\)</span><span class="math notranslate nohighlight">\(
+Sua origem coincide com o centro geométrico dos mancais, e nesta base os vetores serão representados a partir dos cursores \)</span>\mathbf{\hat{X}}<span class="math notranslate nohighlight">\(, \)</span>\mathbf{\hat{Y}}<span class="math notranslate nohighlight">\(, \)</span>\mathbf{\hat{Z}}<span class="math notranslate nohighlight">\(. Por exemplo, o vetor posição pode ser expresso como
+\)</span><span class="math notranslate nohighlight">\(\mathbf{r}_{R_0} = X_0 \mathbf{\hat{X}} + Y_0 \mathbf{\hat{Y}} + Z_0 \mathbf{\hat{Z}}.\)</span><span class="math notranslate nohighlight">\(
+As grandezas escalares \)</span>X_0<span class="math notranslate nohighlight">\(, \)</span>Y_0<span class="math notranslate nohighlight">\(, e  \)</span>Z_0$ indicam a amplitude deste vetor nas respectivas direções.</p></li>
+</ul>
+<div align="center">
+<img src="_static/Sistema_de_coodenadas.png" width="400"/>
+</div><ul class="simple">
+<li><p><strong>Sitema móvel</strong>, composto pela origem <span class="math notranslate nohighlight">\(G\)</span> e cursores <span class="math notranslate nohighlight">\(\mathbf{\hat{x}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{y}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{z}}\)</span>, na forma
+$<span class="math notranslate nohighlight">\(R:\{G, \mathbf{\hat{x}},\mathbf{\hat{y}},\mathbf{\hat{z}}\}.\)</span><span class="math notranslate nohighlight">\(
+Sua origem coincide com o centro de massa do disco, e nesta base os vetores serão representados a partir de seus cursores, por exemplo, o vetor posição pode ser expresso como&lt;br&gt;&lt;br&gt;
+\)</span><span class="math notranslate nohighlight">\(\mathbf{r}_{R} = \textit{x} \mathbf{\hat{x}} + \textit{y} \mathbf{\hat{y}} + \textit{z} \mathbf{\hat{z}}.\)</span><span class="math notranslate nohighlight">\(
+E, de forma análoga ao utilizado no sistema inercial, as grandezas escalares \)</span>x<span class="math notranslate nohighlight">\(, \)</span>y<span class="math notranslate nohighlight">\( e \)</span>z$ indicam a amplitude deste vetor nas respectivas direções.</p></li>
+</ul>
+<section id="transformacao-de-coordenadas">
+<h2>Transformação de Coordenadas<a class="headerlink" href="#transformacao-de-coordenadas" title="Link to this heading">#</a></h2>
+<p>O fato de o sistema de coordenadas móvel girar, implica que os cursores do sistemas móvel <span class="math notranslate nohighlight">\(R(x-y-z)\)</span> e o sistema inercial de referência <span class="math notranslate nohighlight">\(R_0(X-Y-Z)\)</span> deixem de ser paralelos e passem a guardar uma relação entre os cursores do sistema inercial e do sistema móvel dependente dos angulos <span class="math notranslate nohighlight">\(\psi=\psi(t)\)</span>, <span class="math notranslate nohighlight">\(\theta=\theta(t)\)</span> e <span class="math notranslate nohighlight">\(\phi=\phi(t)\)</span> por exemplo, conforme figura abaixo. Esta relação entre sistemas é dada pela matriz de transformação de coordenadas, a qual leva a representação do vetor de uma base para outra base.</p>
+<div align="center">
+<img src="_static/Sistema de coodenadas giros x1 y.png" width="500"/>
+</div>
+<p>Para coincidir a orientação do sistema de referência móvel com o sistema inercial aplica-se um grupo de rotações tridimensionais a partir da origem. Essas rotações consecutivas não são comutativas, ou seja, a ordem que são aplicadas faz diferença no resultado final.</p>
+<p>Assim sendo, podemos inicialmente aplicar uma rotação  de angulo <span class="math notranslate nohighlight">\(\psi\)</span> em torno do eixo <span class="math notranslate nohighlight">\(Z\)</span>, de sentido positivo conforme a regra da mão direitra.</p>
+<div align="center">
+<img src="_static/Sistema de coodenadas giro z.png" width="500"/>
+</div><p>Dessa forma o vetor velocidade angular da base <span class="math notranslate nohighlight">\(R_1 : \{{G,\mathbf{\hat{x}_1},\mathbf{\hat{y}_1},\mathbf{\hat{z}_1}}\}\)</span> em relação à base inercial <span class="math notranslate nohighlight">\(R_0\)</span> pode ser escrita como</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{\omega}_{R_1/R_0} = 
+\begin{align}
+    \begin{Bmatrix}
+        0 \\
+        0 \\
+        \dot{\psi}(t)
+    \end{Bmatrix}
+\end{align}_{R_1}
+\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+= \begin{align}
+    \begin{Bmatrix}
+        0 \\
+        0 \\
+        \dot{\psi}(t)
+    \end{Bmatrix}
+\end{align}_{R_0}
+\end{split}\]</div>
+<p>ou como</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{\omega}_{R_1/R_0} = \dot{\psi}(t) \mathbf{\hat{z}_1} = \dot{\psi}(t) \mathbf{\hat{Z}}.\]</div>
+<p>Projetando-se os cursores da base móvel sobre a base inercial, chega-se a seguinte relação entre eles, escrita de forma matricial</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+    \begin{Bmatrix}
+        x_1 \\
+        y_1 \\
+        z_1
+    \end{Bmatrix}_{R_1}
+\end{align}
+=
+\begin{bmatrix}
+    \cos{\psi} &amp; \sin{\psi} &amp; 0 \\ 
+    -\sin{\psi} &amp; \cos{\psi} &amp; 0 \\ 
+    0 &amp; 0 &amp; 1
+\end{bmatrix}
+\begin{Bmatrix}
+    X_0 \\
+    Y_0 \\
+    Z_0
+\end{Bmatrix}_{R_0},
+\end{split}\]</div>
+<p>onde</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}{}_{R_1}T_{R_0} = 
+\begin{bmatrix}
+    \cos{\psi} &amp; \sin{\psi} &amp; 0 \\ 
+    -\sin{\psi} &amp; \cos{\psi} &amp; 0 \\ 
+    0 &amp; 0 &amp; 1
+\end{bmatrix}\end{split}\]</div>
+<p>é a matriz de transformação de coordenadas que, quando aplicada a um vetor representado no sistema <span class="math notranslate nohighlight">\(R_0\)</span>, gera um representação no sistema de referência intermediário <span class="math notranslate nohighlight">\(R_1 : \{G, \mathbf{\hat{x}_1}, \mathbf{\hat{y}_1}, \mathbf{\hat{z}_1}\}\)</span>.</p>
+<p>O código a seguir ilustra a transformação de um vetor representado na base <span class="math notranslate nohighlight">\(R_0\)</span> para uma base <span class="math notranslate nohighlight">\(R_1\)</span> rotacionada em 45°.</p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -447,6 +539,21 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformacao-de-coordenadas">Transformação de Coordenadas</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
