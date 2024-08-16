@@ -1,0 +1,44 @@
+# This is the name of the GitHub Actions workflow
+name: deploy-book
+
+# This specifies the events that will trigger the workflow
+on:
+  push: # The workflow will run on push events
+    branches: 
+      - main # Specifically, it will run when changes are pushed to the 'main' branch
+
+# This section defines the jobs that will be run as part of the workflow
+jobs:
+  build:
+    # This specifies the type of runner that the job will run on
+    runs-on: ubuntu-latest # The job will run on the latest version of Ubuntu
+
+    # These are the individual steps that will be run as part of the job
+    steps:
+      # This step checks out the repository to the runner
+      - uses: actions/checkout@v4
+
+      # This step sets up Python on the runner
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x' # Specifies the version of Python to be used
+
+      # This step installs the necessary dependencies
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt # Installs dependencies listed in requirements.txt
+          pip install jupyter-book # Installs Jupyter Book
+
+      # This step builds the Jupyter Book
+      - name: Build the book
+        run: jupyter-book build  rotordynamics/ # Builds the book from the current directory
+
+      # This step deploys the book to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.ACTIONS_DEPLOY_KEY }} # Uses a personal access token stored in secrets for authentication
+          publish_dir: rotordynamics/_build/html # Specifies the directory containing the built book
+          publish_branch: gh-pages # Specifies the branch to which the book should be deployed
+          keep_files: false # Specifies that existing files in the branch should be overwritten
