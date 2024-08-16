@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Welcome to your Jupyter Book &#8212; Dinâmica de Rotores</title>
+    <title>Introdução &#8212; Dinâmica de Rotores</title>
   
   
   
@@ -57,12 +57,11 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'intro';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Markdown Files" href="markdown.html" />
+    <link rel="next" title="Sistema de Referência" href="sistema_ref.html" />
+    <link rel="prev" title="Apresentação" href="presentation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -125,8 +124,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -145,7 +142,7 @@
     
   
 
-<a class="navbar-brand logo" href="#">
+<a class="navbar-brand logo" href="presentation.html">
   
   
   
@@ -156,8 +153,8 @@
       
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="Dinâmica de Rotores - Home"/>
-    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Dinâmica de Rotores - Home"/>`);</script>
+    <img src="_static/Coordinate_system.png" class="logo__image only-light" alt="Dinâmica de Rotores - Home"/>
+    <script>document.write(`<img src="_static/Coordinate_system.png" class="logo__image only-dark" alt="Dinâmica de Rotores - Home"/>`);</script>
   
   
 </a></div>
@@ -176,13 +173,15 @@
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1 current active">
-                <a class="reference internal" href="#">
-                    Welcome to your Jupyter Book
+            <li class="toctree-l1">
+                <a class="reference internal" href="presentation.html">
+                    Apresentação
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introdução</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sistema_ref.html">Sistema de Referência</a></li>
 <li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
@@ -358,7 +357,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -369,11 +370,19 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Welcome to your Jupyter Book</h1>
+    <h1>Introdução</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracteristicas-do-conjunto-rotativo">Características do Conjunto Rotativo</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -383,20 +392,26 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="welcome-to-your-jupyter-book">
-<h1>Welcome to your Jupyter Book<a class="headerlink" href="#welcome-to-your-jupyter-book" title="Link to this heading">#</a></h1>
-<p>This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out <a class="reference external" href="https://jupyterbook.org">the Jupyter Book documentation</a> for more information.</p>
-<p>Check out the content pages bundled with this sample book to see more.</p>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
+  <section class="tex2jax_ignore mathjax_ignore" id="introducao">
+<h1>Introdução<a class="headerlink" href="#introducao" title="Link to this heading">#</a></h1>
+<p>O objetivo do trabalho proposto na referida disciplina consiste em caracterizar o comportamento dinâmico de um sistema formado por um conjunto rotativo submetido a torção e flexão. O conjunto rotativo é composto por um eixo e disco (desbalanceado), suportado por um par de mancais.  Deseja-se prever os seguintes aspectos ainda em etapa de projeto:</p>
+<ul class="simple">
+<li><p>Coportamento dinâmico;</p></li>
+<li><p>Velocidades críticas quanto ao comportamento vibracional lateral.</p></li>
+<li><p>Possíveis instabilidades.</p></li>
+<li><p>Resposta à aplicação de massa de desbalanço.</p></li>
+<li><p>Resposta a forças assíncronas.</p></li>
 </ul>
-</div>
+<section id="caracteristicas-do-conjunto-rotativo">
+<h2>Características do Conjunto Rotativo<a class="headerlink" href="#caracteristicas-do-conjunto-rotativo" title="Link to this heading">#</a></h2>
+<p>Os elementos básicos que compôe o conjunto rotativo ora em estudo são: o disco; o eixo; os mancais; e os elementos de selagem. Visto que em aplicações reais, o desblancemento não pode ser completamente eliminado, massas de desbalanceamento também estão presente nessa modelagem.</p>
+<p>Procedimento de modelagem:</p>
+<ol class="arabic simple">
+<li><p>Determinar expressões para a energia cinética do disco, do eixo e das massas de dos balanços.</p></li>
+<li><p>Determinar expressões para a energia de deformação, com intuito de caracterizar o eixo.</p></li>
+<li><p>Forças serão aplicadas para caracterizar mancais e selagens para determinar o trabalho virtual.</p></li>
+</ol>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -429,12 +444,21 @@ It does not go in-depth into any particular topic - check out <a class="referenc
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="presentation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Apresentação</p>
+      </div>
+    </a>
     <a class="right-next"
-       href="markdown.html"
+       href="sistema_ref.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Markdown Files</p>
+        <p class="prev-next-title">Sistema de Referência</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -444,6 +468,21 @@ It does not go in-depth into any particular topic - check out <a class="referenc
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracteristicas-do-conjunto-rotativo">Características do Conjunto Rotativo</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
