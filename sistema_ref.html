@@ -382,7 +382,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformacao-de-coordenadas">Transformação de Coordenadas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-inercial">Sistema inercial</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sitema-movel">Sitema móvel</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transformacao-de-coordenadas">Transformação de Coordenadas</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -401,23 +405,22 @@ document.write(`
 <img src="img/Coordinate_system.png" width="400"/>
 </div>
 <p>O objetivo da utilização de sistemas móveis de referência na cinemática é facilitar a representação de movimentos complexos, subdividindo-os em vários movimentos mais simples que se somam para compor o movimento absoluto. Toda a representação matemática é baseada em cursores considerando uma origem predefinida, conforme descrito a seguir.</p>
-<ul class="simple">
-<li><p><strong>Sistema inercial</strong>, composto pela origem <span class="math notranslate nohighlight">\(O\)</span> e cursores <span class="math notranslate nohighlight">\(\mathbf{\hat{X}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{Y}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{Z}}\)</span>, na forma $<span class="math notranslate nohighlight">\(R_0:\{O, \mathbf{\hat{X}},\mathbf{\hat{Y}},\mathbf{\hat{Z}}\}.\)</span><span class="math notranslate nohighlight">\(
-Sua origem coincide com o centro geométrico dos mancais, e nesta base os vetores serão representados a partir dos cursores \)</span>\mathbf{\hat{X}}<span class="math notranslate nohighlight">\(, \)</span>\mathbf{\hat{Y}}<span class="math notranslate nohighlight">\(, \)</span>\mathbf{\hat{Z}}<span class="math notranslate nohighlight">\(. Por exemplo, o vetor posição pode ser expresso como
-\)</span><span class="math notranslate nohighlight">\(\mathbf{r}_{R_0} = X_0 \mathbf{\hat{X}} + Y_0 \mathbf{\hat{Y}} + Z_0 \mathbf{\hat{Z}}.\)</span><span class="math notranslate nohighlight">\(
-As grandezas escalares \)</span>X_0<span class="math notranslate nohighlight">\(, \)</span>Y_0<span class="math notranslate nohighlight">\(, e  \)</span>Z_0$ indicam a amplitude deste vetor nas respectivas direções.</p></li>
-</ul>
+<section id="sistema-inercial">
+<h2>Sistema inercial<a class="headerlink" href="#sistema-inercial" title="Link to this heading">#</a></h2>
+<p>Composto pela origem <span class="math notranslate nohighlight">\(O\)</span> e cursores <span class="math notranslate nohighlight">\(\mathbf{\hat{X}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{Y}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{Z}}\)</span>, na forma $<span class="math notranslate nohighlight">\(R_0:\{O, \mathbf{\hat{X}},\mathbf{\hat{Y}},\mathbf{\hat{Z}}\}.\)</span>$</p>
+<p>Sua origem coincide com o centro geométrico dos mancais, e nesta base os vetores serão representados a partir dos cursores <span class="math notranslate nohighlight">\(\mathbf{\hat{X}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{Y}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{Z}}\)</span>. Por exemplo, o vetor posição pode ser expresso como $<span class="math notranslate nohighlight">\(\mathbf{r}_{R_0} = X_0 \mathbf{\hat{X}} + Y_0 \mathbf{\hat{Y}} + Z_0 \mathbf{\hat{Z}}.\)</span>$</p>
+<p>As grandezas escalares <span class="math notranslate nohighlight">\(X_0\)</span>, <span class="math notranslate nohighlight">\(Y_0\)</span>, e  <span class="math notranslate nohighlight">\(Z_0\)</span> indicam a amplitude deste vetor nas respectivas direções.</p>
 <div align="center">
 <img src="img/Sistema_de_coodenadas.png" width="400"/>
-</div><ul class="simple">
-<li><p><strong>Sitema móvel</strong>, composto pela origem <span class="math notranslate nohighlight">\(G\)</span> e cursores <span class="math notranslate nohighlight">\(\mathbf{\hat{x}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{y}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{z}}\)</span>, na forma
-$<span class="math notranslate nohighlight">\(R:\{G, \mathbf{\hat{x}},\mathbf{\hat{y}},\mathbf{\hat{z}}\}.\)</span><span class="math notranslate nohighlight">\(
-Sua origem coincide com o centro de massa do disco, e nesta base os vetores serão representados a partir de seus cursores, por exemplo, o vetor posição pode ser expresso como&lt;br&gt;&lt;br&gt;
-\)</span><span class="math notranslate nohighlight">\(\mathbf{r}_{R} = \textit{x} \mathbf{\hat{x}} + \textit{y} \mathbf{\hat{y}} + \textit{z} \mathbf{\hat{z}}.\)</span><span class="math notranslate nohighlight">\(
-E, de forma análoga ao utilizado no sistema inercial, as grandezas escalares \)</span>x<span class="math notranslate nohighlight">\(, \)</span>y<span class="math notranslate nohighlight">\( e \)</span>z$ indicam a amplitude deste vetor nas respectivas direções.</p></li>
-</ul>
+</div></section>
+<section id="sitema-movel">
+<h2>Sitema móvel<a class="headerlink" href="#sitema-movel" title="Link to this heading">#</a></h2>
+<p>Composto pela origem <span class="math notranslate nohighlight">\(G\)</span> e cursores <span class="math notranslate nohighlight">\(\mathbf{\hat{x}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{y}}\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\hat{z}}\)</span>, na forma
+$<span class="math notranslate nohighlight">\(R:\{G, \mathbf{\hat{x}},\mathbf{\hat{y}},\mathbf{\hat{z}}\}.\)</span>$</p>
+<p>Sua origem coincide com o centro de massa do disco, e nesta base os vetores serão representados a partir de seus cursores, por exemplo, o vetor posição pode ser expresso como $<span class="math notranslate nohighlight">\(\mathbf{r}_{R} = \textit{x} \mathbf{\hat{x}} + \textit{y} \mathbf{\hat{y}} + \textit{z} \mathbf{\hat{z}}.\)</span>$</p>
+<p>E, de forma análoga ao utilizado no sistema inercial, as grandezas escalares <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> e <span class="math notranslate nohighlight">\(z\)</span> indicam a amplitude deste vetor nas respectivas direções.</p>
 <section id="transformacao-de-coordenadas">
-<h2>Transformação de Coordenadas<a class="headerlink" href="#transformacao-de-coordenadas" title="Link to this heading">#</a></h2>
+<h3>Transformação de Coordenadas<a class="headerlink" href="#transformacao-de-coordenadas" title="Link to this heading">#</a></h3>
 <p>O fato de o sistema de coordenadas móvel girar, implica que os cursores do sistemas móvel <span class="math notranslate nohighlight">\(R(x-y-z)\)</span> e o sistema inercial de referência <span class="math notranslate nohighlight">\(R_0(X-Y-Z)\)</span> deixem de ser paralelos e passem a guardar uma relação entre os cursores do sistema inercial e do sistema móvel dependente dos angulos <span class="math notranslate nohighlight">\(\psi=\psi(t)\)</span>, <span class="math notranslate nohighlight">\(\theta=\theta(t)\)</span> e <span class="math notranslate nohighlight">\(\phi=\phi(t)\)</span> por exemplo, conforme figura abaixo. Esta relação entre sistemas é dada pela matriz de transformação de coordenadas, a qual leva a representação do vetor de uma base para outra base.</p>
 <div align="center">
 <img src="img/Sistema de coodenadas giros x1 y.png" width="500"/>
@@ -481,6 +484,7 @@ E, de forma análoga ao utilizado no sistema inercial, as grandezas escalares \)
 \end{bmatrix}\end{split}\]</div>
 <p>é a matriz de transformação de coordenadas que, quando aplicada a um vetor representado no sistema <span class="math notranslate nohighlight">\(R_0\)</span>, gera um representação no sistema de referência intermediário <span class="math notranslate nohighlight">\(R_1 : \{G, \mathbf{\hat{x}_1}, \mathbf{\hat{y}_1}, \mathbf{\hat{z}_1}\}\)</span>.</p>
 <p>O código a seguir ilustra a transformação de um vetor representado na base <span class="math notranslate nohighlight">\(R_0\)</span> para uma base <span class="math notranslate nohighlight">\(R_1\)</span> rotacionada em 45°.</p>
+</section>
 </section>
 </section>
 
@@ -548,7 +552,11 @@ E, de forma análoga ao utilizado no sistema inercial, as grandezas escalares \)
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transformacao-de-coordenadas">Transformação de Coordenadas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sistema-inercial">Sistema inercial</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sitema-movel">Sitema móvel</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transformacao-de-coordenadas">Transformação de Coordenadas</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
