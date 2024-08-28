@@ -1,1 +1,6 @@
 numpy
+pint
+matplotlib
+plotly
+scipy
+opencv-python

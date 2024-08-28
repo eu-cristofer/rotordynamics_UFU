@@ -27,7 +27,7 @@ jobs:
       # This step installs the necessary dependencies
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt # Installs dependencies listed in requirements.txt
+          pip install . # Installs rotor_analysis package and requirements.txt
           pip install jupyter-book # Installs Jupyter Book
 
       # This step builds the Jupyter Book

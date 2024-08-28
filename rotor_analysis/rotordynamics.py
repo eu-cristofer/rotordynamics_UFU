@@ -360,7 +360,7 @@ class Rotor:
             x=speed_range,
             y=speed_range / 60,  # Converting RPM to Hertz
             mode="lines",
-            name="Rotational Speed Frequency",
+            name="Spin Speed (Hz)",
         )
         trace1 = go.Scatter(x=speed_range, y=fw, mode="lines", name="Forward")
         trace2 = go.Scatter(x=speed_range, y=bw, mode="lines", name="Backward")
@@ -383,7 +383,7 @@ class Rotor:
         # Create the layout
         layout = go.Layout(
             title="Campbell Diagram",
-            xaxis=dict(title="Rotational Speed (RPM)"),
+            xaxis=dict(title="Spin Speed (RPM)"),
             yaxis=dict(title="Natural Frequency (Hz)"),
         )
         # Create the figure

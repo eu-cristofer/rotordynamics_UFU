@@ -1,0 +1,10 @@
+numpy
+pint
+matplotlib
+plotly
+scipy
+opencv-python
+
+[dev]
+jupyter-book
+black

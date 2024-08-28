@@ -6,8 +6,12 @@ root: presentation
 parts:
   - caption: Fundamentos
     chapters:
-    - file: intro
-    - file: sistema_ref
+    - file: content/intro1
+    - file: content/sistema_ref
   - caption: Análise com dados numéricos
     chapters:
-    - file: campbell
+    - file: content/intro2
+    - file: content/campbell
+  - caption: Referências
+    chapters:
+    - file: references

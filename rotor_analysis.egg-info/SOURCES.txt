@@ -1,0 +1,12 @@
+LICENSE
+README.md
+setup.py
+rotor_analysis/__init__.py
+rotor_analysis/results.py
+rotor_analysis/rotordynamics.py
+rotor_analysis/utilities.py
+rotor_analysis.egg-info/PKG-INFO
+rotor_analysis.egg-info/SOURCES.txt
+rotor_analysis.egg-info/dependency_links.txt
+rotor_analysis.egg-info/requires.txt
+rotor_analysis.egg-info/top_level.txt

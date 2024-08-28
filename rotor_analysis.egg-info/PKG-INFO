@@ -1,0 +1,22 @@
+Metadata-Version: 2.1
+Name: rotor_analysis
+Version: 0.1.0
+Summary: Tools for rotordynamic analysis
+Home-page: https://eu-cristofer.github.io/rotordynamics_UFU/
+Author: Cristofer Antoni Souza Costa
+Author-email: cristofercosta@yahoo.com.br
+License: Apache License 2.0
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: pint
+Requires-Dist: matplotlib
+Requires-Dist: plotly
+Requires-Dist: scipy
+Requires-Dist: opencv-python
+Provides-Extra: dev
+Requires-Dist: jupyter-book; extra == "dev"
+Requires-Dist: black; extra == "dev"
