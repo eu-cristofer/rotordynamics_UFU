@@ -8,6 +8,9 @@ parts:
     chapters:
     - file: content/intro1
     - file: content/sistema_ref
+    - file: content/transformacao
+    - file: content/velocidade_angular
+    
   - caption: Análise com dados numéricos
     chapters:
     - file: content/caracterizacao
@@ -16,6 +19,8 @@ parts:
       sections:
         - file: content/desbalanceamento
         - file: content/assincrono
+        - file: content/forca_fixa
+        - file: content/forca_fixa_video
   - caption: Referências
     chapters:
     - file: references
