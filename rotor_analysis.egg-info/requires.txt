@@ -3,6 +3,7 @@ pint
 matplotlib
 plotly
 scipy
+ipywidgets
 opencv-python
 
 [dev]

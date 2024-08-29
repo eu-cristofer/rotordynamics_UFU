@@ -16,6 +16,7 @@ Requires-Dist: pint
 Requires-Dist: matplotlib
 Requires-Dist: plotly
 Requires-Dist: scipy
+Requires-Dist: ipywidgets
 Requires-Dist: opencv-python
 Provides-Extra: dev
 Requires-Dist: jupyter-book; extra == "dev"

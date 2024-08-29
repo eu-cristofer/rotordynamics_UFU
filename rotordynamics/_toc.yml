@@ -10,8 +10,12 @@ parts:
     - file: content/sistema_ref
   - caption: Análise com dados numéricos
     chapters:
-    - file: content/intro2
+    - file: content/caracterizacao
     - file: content/campbell
+    - file: content/resposta
+      sections:
+        - file: content/desbalanceamento
+        - file: content/assincrono
   - caption: Referências
     chapters:
     - file: references

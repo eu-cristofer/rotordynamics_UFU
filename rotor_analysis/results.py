@@ -129,26 +129,7 @@ def campbell_diagram_axial_forces(
         height=500,
         legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01),
     )
-    fig.show()
-
-    # Define a function to update the output based on the slider value
-    def update_output(index: int) -> None:
-        print(f"Axial load comparison {data0['Speed'][index]:g} rpm")
-        print(f"-----------------------------")
-        print(f"No load:\t{data0['Forward'][index]:.3f} Hz")
-        print(f"Positive:\t{data1['Forward'][index]:.3f} Hz")
-        print(f"Negative:\t{data2['Forward'][index]:.3f} Hz")
-
-    # Create a slider widget
-    index_slider = widgets.IntSlider(
-        value=33, min=0, max=len(data0["Speed"]) - 1, step=1, description="Sample"
-    )
-
-    # Define an interactive output
-    output = widgets.interactive_output(update_output, {"index": index_slider})
-
-    # Display the slider and the output
-    display(index_slider, output)
+    return fig
 
 
 def add_secondary_yaxis(
