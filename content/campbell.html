@@ -184,8 +184,8 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="intro1.html">Introdução</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sistema_ref.html">Sistema de Referência</a></li>
-
-
+<li class="toctree-l1"><a class="reference internal" href="transformacao.html">Transformação de Coordenadas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="velocidade_angular.html">Vetor velocidade angular</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Análise com dados numéricos</span></p>
 <ul class="current nav bd-sidenav">
@@ -193,9 +193,9 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Diagrama de Campbell</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="resposta.html">Resposta a solicitação – Rotor Simétrico</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="desbalanceamento.html">Desbalanceamento</a></li>
-
-
 <li class="toctree-l2"><a class="reference internal" href="assincrono.html">Força Assíncrona</a></li>
+<li class="toctree-l2"><a class="reference internal" href="forca_fixa.html">Excitação harmônica fixa no espaço</a></li>
+<li class="toctree-l2"><a class="reference internal" href="forca_fixa_video.html">Animação - Excitação harmônica fixa no espaço</a></li>
 </ul>
 </details></li>
 </ul>
@@ -397,11 +397,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adicionando-forca-axial-ao-rotor">Adicionando força axial ao rotor</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacao-dos-resultados">Comparação dos resultados</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expandido-o-codigo-representacao-no-espaco-de-estados-e-o-calculo-das-frequencias-naturais">Expandido o código: representação no espaço de estados e o cálculo das frequëncias naturais</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adicionando-forca-axial-ao-rotor">Adicionando força axial ao rotor</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacao-dos-resultados">Comparação dos resultados</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expandido-o-codigo-representacao-no-espaco-de-estados-e-o-calculo-das-frequencias-naturais">Expandido o código: representação no espaço de estados e o cálculo das frequëncias naturais</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expandindo-o-codigo-para-considerar-dois-discos">Expandindo o código para considerar dois discos</a></li>
 </ul>
             </nav>
@@ -657,9 +657,8 @@ if (outputEl) {{
 </div>
 </div>
 </div>
-</section>
 <section id="comparacao-dos-resultados">
-<h2>Comparação dos resultados<a class="headerlink" href="#comparacao-dos-resultados" title="Link to this heading">#</a></h2>
+<h3>Comparação dos resultados<a class="headerlink" href="#comparacao-dos-resultados" title="Link to this heading">#</a></h3>
 <p>Como pode ser visto abaixo, analisando as três modelagens (sem força axial, força positiva e força negativa), observa-se a alteração das frequências naturais – mesmo sem rotação. Com a aplicação da força de tração há um enrijecimento do sistema, elevando a frequência natural do mesmo. Já, o efeito oposto é observado quando a força negativa é aplicada.</p>
 <p>O código abaixo gera uma representação gráfica do efeito dessas forças (positiva e negativa).</p>
 <div class="cell docutils container">
@@ -700,8 +699,10 @@ if (outputEl) {{
 
                         })                };                });            </script>        </div></div></div>
 </div>
+</section>
+</section>
 <section id="expandido-o-codigo-representacao-no-espaco-de-estados-e-o-calculo-das-frequencias-naturais">
-<h3>Expandido o código: representação no espaço de estados e o cálculo das frequëncias naturais<a class="headerlink" href="#expandido-o-codigo-representacao-no-espaco-de-estados-e-o-calculo-das-frequencias-naturais" title="Link to this heading">#</a></h3>
+<h2>Expandido o código: representação no espaço de estados e o cálculo das frequëncias naturais<a class="headerlink" href="#expandido-o-codigo-representacao-no-espaco-de-estados-e-o-calculo-das-frequencias-naturais" title="Link to this heading">#</a></h2>
 <p>Após a obtenção dos primeiros resultados, calculando-se as frequências naturais por meio do polinômio característico, foi implementado no código a obtenção das frequências naturais por meio do cálculo dos autovalores com auxílio da biblioteca <code class="docutils literal notranslate"><span class="pre">scipy.optimize.eig</span></code>.</p>
 <p>Nesse sentido, foram calculados os autovalores da matrix <code class="docutils literal notranslate"><span class="pre">A</span></code> proveniente da formulação do problema utilizando-se a representação no espaço de estados.</p>
 <div class="cell docutils container">
@@ -752,7 +753,6 @@ Forward:  62.70315311038258 	Backward:  33.78154665241561
 </div>
 </div>
 </div>
-</section>
 </section>
 <section id="expandindo-o-codigo-para-considerar-dois-discos">
 <h2>Expandindo o código para considerar dois discos<a class="headerlink" href="#expandindo-o-codigo-para-considerar-dois-discos" title="Link to this heading">#</a></h2>
@@ -881,11 +881,11 @@ if (outputEl) {{
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adicionando-forca-axial-ao-rotor">Adicionando força axial ao rotor</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacao-dos-resultados">Comparação dos resultados</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#expandido-o-codigo-representacao-no-espaco-de-estados-e-o-calculo-das-frequencias-naturais">Expandido o código: representação no espaço de estados e o cálculo das frequëncias naturais</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adicionando-forca-axial-ao-rotor">Adicionando força axial ao rotor</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparacao-dos-resultados">Comparação dos resultados</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expandido-o-codigo-representacao-no-espaco-de-estados-e-o-calculo-das-frequencias-naturais">Expandido o código: representação no espaço de estados e o cálculo das frequëncias naturais</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expandindo-o-codigo-para-considerar-dois-discos">Expandindo o código para considerar dois discos</a></li>
 </ul>
   </nav></div>
@@ -901,7 +901,7 @@ if (outputEl) {{
   <div class="footer-item">
     
 <p class="component-author">
-By Cristofer Antoni Souza Costaa
+By Cristofer Antoni Souza Costa
 </p>
 
   </div>
