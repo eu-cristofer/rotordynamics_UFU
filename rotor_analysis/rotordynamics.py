@@ -173,10 +173,10 @@ class Rotor:
         Get the damping matrix.
 
         Returns:
-            np.ndarray: Gyroscopic matrix.
+            np.ndarray: Damping matrix.
         """
         try:
-            damping = np.array(([self.c, 0], [0, self.c]))
+            damping = np.array(([self.damping.beta * self.damping.cxx, 0], [0, self.damping.beta * self.damping.czz]))
         except AttributeError:
             damping = np.zeros_like(self.M)
         return damping
@@ -239,9 +239,9 @@ class Rotor:
         zero_matrix = np.zeros_like(self.M)
         identity = np.eye(self.M.shape[0])
 
-        omega = speed / 60 * 2 * np.pi
+        spin = speed / 60 * 2 * np.pi
         bottom_block = np.hstack(
-            (-self.M_inverse @ (self.K), -self.M_inverse @ (omega * self.G + self.C))
+            (-self.M_inverse @ self.K, -self.M_inverse @ (spin * self.G + self.C))
         )
 
         top_block = np.hstack((zero_matrix, identity))
@@ -266,15 +266,23 @@ class Rotor:
             float: The computed value.
         """
         omega = 2 * np.pi * f
+        spin = speed / 60 * 2 * np.pi
         k1, k2 = self.stiffness
+
+        # Damping
+        if hasattr(self, "damping"):
+            c1 = self.damping.beta * self.damping.cxx
+            c2 = self.damping.beta * self.damping.czz
+        else:
+            c1 = 0
+            c2 = 0
         
         comp = (
-            self.mass**2 * omega**4
-            - (k1*self.mass + k2*self.mass + self.a**2 * (speed/60 * 2*np.pi)**2)
+            self.mass**2 * omega**4 - self.mass * (c1 + c2) * omega**3
+            - (k1*self.mass + k2*self.mass + c1 * c2 + self.a**2 * spin**2)
             * omega**2
-            + k1 * k2
+            + (k2 * c1 + k1 * c2) * omega + k1 * k2
         )
-        
         return comp
 
     @property
@@ -285,9 +293,87 @@ class Rotor:
         Returns:
             float: The natural frequency.
         """
-        omega = fsolve(self.characteristic_eq, [20, 10], args=0)
+        omega = fsolve(self.characteristic_eq, [60, 30], args=0)
         return omega
+    
+ 
+    def compute_roots_2(
+        self, speed_range: np.ndarray = np.linspace(0, 9000, 101)
+    ) -> Tuple[List[float], List[float]]:
+        # Given parameters (example values, you should replace them with actual values)
+        m = self.mass
+        a = self.a
+        k1, k2 = self.stiffness
+        # Damping
+        if hasattr(self, "damping"):
+            c1 = self.damping.beta * self.damping.cxx
+            c2 = self.damping.beta * self.damping.czz
+        else:
+            c1 = 0
+            c2 = 0
 
+        roots_fw = []
+        roots_bw = []
+        for speed in speed_range:
+            spin = speed / 60 * 2 * np.pi
+
+            # Coefficients for the characteristic polynomial from equation (2.257)
+            coefficients = [
+                m**2,
+                m * (c1 + c2),
+                k1 * m + k2 * m + c1 * c2 + a**2 * spin**2,
+                k2 * c1 + k1 * c2,
+                k1 * k2
+            ]
+
+            # Solve for the roots of the polynomial
+            roots = np.roots(coefficients)
+
+            # # Display the roots
+            # print("The roots of the characteristic equation are:", roots)
+
+            complex_roots = set()
+            for root in roots:
+                if np.iscomplex(root):
+                    complex_roots.add(abs(root.imag / (2 * np.pi)))
+            complex_roots = list(complex_roots)
+            complex_roots.sort()
+            roots_fw.append(complex_roots[1])
+            roots_bw.append(complex_roots[0])
+            # print(speed, complex_roots[0], complex_roots[1], sep="\t")
+
+        def func(speed):
+                omega = speed / 60 * 2 * np.pi
+                spin = speed / 60 * 2 * np.pi
+                coefficients = [
+                    m**2 * omega**4,
+                    - m * (c1 + c2) * omega**3,
+                    -(k1 * m + k2 * m + c1 * c2 + a**2 * spin**2)  * omega**2,
+                    (k2 * c1 + k1 * c2) * omega,
+                    k1 * k2
+                ]
+                return sum(coefficients)
+        
+        # Computing the critical speeds
+        backward_diff = 1000
+        backward_guess = 0
+        forward_diff = 1000
+        forward_guess = 0
+        for i, j, k in zip(speed_range, roots_fw, roots_bw):
+            if i > 0:
+                if abs(j - i / 60) < forward_diff:
+                    forward_diff = abs(j - i / 60)
+                    forward_guess = i
+                if abs(k - i / 60) < backward_diff:
+                    backward_diff = abs(j - i / 60)
+                    backward_guess = i
+
+        from scipy.optimize import newton
+        self.critical_speed_fw = Q_(newton(func, forward_guess), "rpm")
+        self.critical_speed_bw = Q_(newton(func, backward_guess), "rpm")
+
+        return roots_fw, roots_bw
+    
     def compute_roots(
         self, speed_range: np.ndarray = np.linspace(0, 9000, 101)
     ) -> Tuple[List[float], List[float]]:
@@ -308,7 +394,7 @@ class Rotor:
 
         for speed in speed_range[1:]:
             root_fw = fsolve(self.characteristic_eq, roots_fw[-1] + 1, args=(speed))
-            root_bw = fsolve(self.characteristic_eq, roots_bw[-1] - 1 , args=(speed))
+            root_bw = fsolve(self.characteristic_eq, roots_bw[-1] - 1, args=(speed))
             roots_fw.append(root_fw[0])
             roots_bw.append(root_bw[0])
 
@@ -354,7 +440,7 @@ class Rotor:
         Returns:
             None
         """
-        fw, bw = self.compute_roots(speed_range)
+        fw, bw = self.compute_roots_2(speed_range)
         # Create traces
         trace0 = go.Scatter(
             x=speed_range,
@@ -383,21 +469,19 @@ class Rotor:
         # Create the layout
         layout = go.Layout(
             title="Campbell Diagram",
-            xaxis=dict(title="Spin Speed (RPM)"),
+            xaxis=dict(title="Rotor Spin Speed (RPM)"),
             yaxis=dict(title="Natural Frequency (Hz)"),
         )
         # Create the figure
         fig = go.Figure(
             data=[trace0, trace1, trace2, point_fw, point_bw], layout=layout
         )
-
         fig.update_layout(
             autosize=False,
             width=500 * 1.62,
             height=500,
             legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01),
         )
-
         # Plot the figure
         if export_chart:
             pyo.plot(fig, filename="chart.html")
@@ -408,6 +492,7 @@ class Rotor:
             return data, fig
         else:
             return fig
+
 
     def f(self, y: float) -> float:
         """

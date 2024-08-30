@@ -129,7 +129,26 @@ def campbell_diagram_axial_forces(
         height=500,
         legend=dict(yanchor="top", y=0.99, xanchor="left", x=0.01),
     )
-    return fig
+    fig.show()
+
+    # Define a function to update the output based on the slider value
+    def update_output(index: int) -> None:
+        print(f"Axial load comparison {data0['Speed'][index]:g} rpm")
+        print(f"-----------------------------")
+        print(f"No load:\t{data0['Forward'][index]:.3f} Hz")
+        print(f"Positive:\t{data1['Forward'][index]:.3f} Hz")
+        print(f"Negative:\t{data2['Forward'][index]:.3f} Hz")
+
+    # Create a slider widget
+    index_slider = widgets.IntSlider(
+        value=33, min=0, max=len(data0["Speed"]) - 1, step=1, description="Sample"
+    )
+
+    # Define an interactive output
+    output = widgets.interactive_output(update_output, {"index": index_slider})
+
+    # Display the slider and the output
+    display(index_slider, output)
 
 
 def add_secondary_yaxis(
@@ -537,8 +556,7 @@ def interactive_orbit_campbell_async(
     A1_func: Callable[..., float],
     A2_func: Callable[..., float],
     *args: Any,
-    initial_speed: float = 3200,
-    max_amplitude: float = 20e-6
+    initial_speed: float = 3200
 ) -> go.Figure:
     """
     Create a plot with a slider to vary speed from 0 to 9000 RPM.
@@ -648,6 +666,8 @@ def interactive_orbit_campbell_async(
         col=1,
         name='Vertical Line'
     )
+    
+    max_amplitude = max(np.max(np.abs(q1_circle)), np.max(np.abs(q2_circle)))
 
     # Set fixed axis ranges
     fig.update_xaxes(title='q1 (m)', range=[-1.2 * max_amplitude, 1.2 * max_amplitude], row=1, col=1)
@@ -663,6 +683,16 @@ def interactive_orbit_campbell_async(
         q1_circle, q2_circle = update_circle_and_sine(A1_func, A2_func, speed, theta, *args)
 
         layout_dict = fig.to_dict()['layout']
+        
+        # Adjusting the y and x axis scales for orbit and timebase plot
+        max_amplitude = max(np.max(np.abs(q1_circle)), np.max(np.abs(q2_circle)))
+        yaxis = layout_dict['yaxis']
+        yaxis['range'] = [-1.2 * max_amplitude, 1.2 * max_amplitude]
+        xaxis = layout_dict['xaxis']
+        xaxis['range'] = [-1.2 * max_amplitude, 1.2 * max_amplitude]
+        yaxis2 = layout_dict['yaxis2']
+        yaxis2['range'] = [-1.2 * max_amplitude, 1.2 * max_amplitude]
+
         # Adjusting the annotations for q1 and q2 in time representation
         annotations = layout_dict['annotations']
         annotations[0]['text'] = f"Orbit @ {speed} rpm"
@@ -683,6 +713,9 @@ def interactive_orbit_campbell_async(
                          campbell[0]['y'], campbell[1]['y'], campbell[2]['y'], campbell[3]['y'],
                          campbell[4]['y'], campbell[5]['y'], campbell[6]['y'], campbell[7]['y']]},
                   {'annotations': annotations,
+                   'yaxis': yaxis,
+                   'xaxis': xaxis,
+                   'yaxis2': yaxis2,
                    'shapes': shapes}],
             label=f'{speed}'
         )
@@ -784,7 +817,7 @@ def plot_vibration_amplitude(A1_function,
         # Create the layout
         layout = go.Layout(
             title=f'Harmonic Force Fixed in Space Response ({A1_function.__name__})',
-            xaxis=dict(title='Excitation Frequency'),
+            xaxis=dict(title='Excitation Frequency (Hz)'),
             yaxis=dict(title='A1 Vibration Amplitude (m)')
         )
 
