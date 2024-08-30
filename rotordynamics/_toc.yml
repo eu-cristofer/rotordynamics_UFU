@@ -20,7 +20,6 @@ parts:
         - file: content/desbalanceamento
         - file: content/assincrono
         - file: content/forca_fixa
-        - file: content/forca_fixa_video
   - caption: Referências
     chapters:
     - file: references
