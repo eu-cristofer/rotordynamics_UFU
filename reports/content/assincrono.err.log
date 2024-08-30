@@ -18,38 +18,32 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-'''
-    Importando bibliotecas de terceira parte
-'''
-import numpy as np
-import pandas as pd
-
-'''
-    Importando a bilbioteca criada para a realização das análises dinâmicas
-    no contexto da disciplina
-'''
-import rotor_analysis as rd
-
-'''
-    Configurando pint.Quantity
-'''
-Q_ = rd.Q_
+orbit_plot = rd.interactive_orbit_campbell_async(
+    campbell_fig,
+    A1_async,
+    A1_async,
+    1,
+    0.5,
+    initial_speed=2700,
+    max_amplitude=2e-05
+)
+orbit_plot.show()
 ------------------
 
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-Cell [0;32mIn[1], line 5[0m
-[1;32m      1[0m [38;5;124;03m'''[39;00m
-[1;32m      2[0m [38;5;124;03m    Importando bibliotecas de terceira parte[39;00m
-[1;32m      3[0m [38;5;124;03m'''[39;00m
-[1;32m      4[0m [38;5;28;01mimport[39;00m [38;5;21;01mnumpy[39;00m [38;5;28;01mas[39;00m [38;5;21;01mnp[39;00m
-[0;32m----> 5[0m [38;5;28;01mimport[39;00m [38;5;21;01mpandas[39;00m [38;5;28;01mas[39;00m [38;5;21;01mpd[39;00m
-[1;32m      7[0m [38;5;124;03m'''[39;00m
-[1;32m      8[0m [38;5;124;03m    Importando a bilbioteca criada para a realização das análises dinâmicas[39;00m
-[1;32m      9[0m [38;5;124;03m    no contexto da disciplina[39;00m
-[1;32m     10[0m [38;5;124;03m'''[39;00m
-[1;32m     11[0m [38;5;28;01mimport[39;00m [38;5;21;01mrotor_analysis[39;00m [38;5;28;01mas[39;00m [38;5;21;01mrd[39;00m
+[0;31mTypeError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[6], line 1[0m
+[0;32m----> 1[0m orbit_plot [38;5;241m=[39m [43mrd[49m[38;5;241;43m.[39;49m[43minteractive_orbit_campbell_async[49m[43m([49m
+[1;32m      2[0m [43m    [49m[43mcampbell_fig[49m[43m,[49m
+[1;32m      3[0m [43m    [49m[43mA1_async[49m[43m,[49m
+[1;32m      4[0m [43m    [49m[43mA1_async[49m[43m,[49m
+[1;32m      5[0m [43m    [49m[38;5;241;43m1[39;49m[43m,[49m
+[1;32m      6[0m [43m    [49m[38;5;241;43m0.5[39;49m[43m,[49m
+[1;32m      7[0m [43m    [49m[43minitial_speed[49m[38;5;241;43m=[39;49m[38;5;241;43m2700[39;49m[43m,[49m
+[1;32m      8[0m [43m    [49m[43mmax_amplitude[49m[38;5;241;43m=[39;49m[38;5;241;43m2e-05[39;49m
+[1;32m      9[0m [43m)[49m
+[1;32m     10[0m orbit_plot[38;5;241m.[39mshow()
 
-[0;31mModuleNotFoundError[0m: No module named 'pandas'
+[0;31mTypeError[0m: interactive_orbit_campbell_async() got an unexpected keyword argument 'max_amplitude'
 
