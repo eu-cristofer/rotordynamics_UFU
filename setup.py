@@ -15,6 +15,7 @@ with open("requirements.txt") as f:
 EXTRAS = {
     "dev": [
         "jupyter-book",
+        "opencv-python",
         "black",
     ]
 }

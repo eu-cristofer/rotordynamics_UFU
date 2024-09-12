@@ -1,11 +1,12 @@
 numpy
 pint
+pandas
 matplotlib
 plotly
 scipy
 ipywidgets
-opencv-python
 
 [dev]
 jupyter-book
+opencv-python
 black

@@ -20,6 +20,9 @@ parts:
         - file: content/desbalanceamento
         - file: content/assincrono
         - file: content/forca_fixa
+    - file: content/resposta_assimetrica
+      sections:
+        - file: content/desbalanceamento_assimetrico
   - caption: Referências
     chapters:
     - file: references

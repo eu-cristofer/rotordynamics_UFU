@@ -12,5 +12,5 @@ python setup.py sdist bdist_wheel
 Them, you can install it with:
 
 ```
-pip install -e .
+pip install -e ".[dev]"
 ```
