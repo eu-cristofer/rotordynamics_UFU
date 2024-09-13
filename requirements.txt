@@ -1,8 +1,8 @@
-numpy
-pint
-pandas
-matplotlib
-plotly
-scipy
-ipywidgets
-opencv-python
+numpy=2.1.1
+pint=0.24.3
+pandas=2.2.2
+matplotlib=3.9.2
+plotly=5.24.0
+scipy=1.14.1
+ipywidgets=8.1.5
+opencv-python=4.10
