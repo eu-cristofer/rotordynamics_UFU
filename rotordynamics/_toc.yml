@@ -23,6 +23,8 @@ parts:
     - file: content/resposta_assimetrica
       sections:
         - file: content/desbalanceamento_assimetrico
+        - file: content/assincrono_assimetrico
+        - file: content/forca_fixa_assimetrico
   - caption: Referências
     chapters:
     - file: references
